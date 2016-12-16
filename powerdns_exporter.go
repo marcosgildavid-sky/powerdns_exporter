@@ -257,7 +257,7 @@ func (e *Exporter) setMetrics(jsonStats <-chan []StatsEntry) (statsMap map[strin
 	for _, def := range e.counterVecDefs {
 		for key, label := range def.labelMap {
 			if value, ok := statsMap[key]; ok {
-				e.counterVecMetrics[def.id].WithLabelValues(label).Set(value)
+				e.counterVecMetrics[def.id].WithLabelValues(label).Add(value)
 			} else {
 				log.Errorf("Expected PowerDNS stats key not found: %s", key)
 				e.jsonParseFailures.Inc()
